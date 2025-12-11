@@ -234,8 +234,8 @@ XGBoost	               0.1674	   0.2161	      0.8158
 ## **CONTACT**
 
 **Team:**
-- Aryan Shah - ars483@rutgers.edu
-- Tanay Desai - tnd38@rutgers.edu
+- Aryan Shah - ars483@scarletmail.rutgers.edu
+- Tanay Desai - tnd38@scarletmail.rutgersrutgers.edu
 
 **Course:** CS 210 - Data Management in Data Science  
 **Submission:** Final Project - December 10, 2025
