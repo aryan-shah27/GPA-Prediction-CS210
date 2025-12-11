@@ -1,5 +1,5 @@
 """
-GPA Prediction System - FINAL SUBMISSION - MASTER RUNNER
+GPA Prediction System MASTER RUNNER
 Runs the complete pipeline in the correct order
 
 Run this file to execute the entire system!
@@ -12,13 +12,12 @@ import os
 OUTPUT_PATH = r"C:\python\files"
 
 def print_header(text):
-    """Print a formatted header"""
+
     print("\n" + "="*80)
     print(text.center(80))
     print("="*80 + "\n")
 
 def run_script(script_name, description):
-    """Run a Python script and handle errors"""
     print_header(description)
     try:
         # Run the script
@@ -37,7 +36,7 @@ def run_script(script_name, description):
         return False
 
 def verify_output_directory():
-    """Create output directory if it doesn't exist"""
+    
     try:
         os.makedirs(OUTPUT_PATH, exist_ok=True)
         print(f"✓ Output directory ready: {OUTPUT_PATH}")

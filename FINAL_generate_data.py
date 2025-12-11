@@ -1,6 +1,6 @@
 """
-GPA Prediction System - FINAL VERSION - Data Generation
-Generates complete synthetic student data for final submission
+GPA Prediction System Data Generation
+Generates complete synthetic student data
 """
 
 import pandas as pd
@@ -12,7 +12,7 @@ import os
 np.random.seed(42)
 random.seed(42)
 
-# OUTPUT PATH - All files save here
+# OUTPUT PATH
 OUTPUT_PATH = r"C:\python\files"
 
 class FinalDataGenerator:
@@ -138,7 +138,6 @@ class FinalDataGenerator:
         return mapping.get(major, 'CS')
     
     def _filter_courses_by_level(self, courses_df, semester_num, major_dept):
-        """Filter courses appropriate for student's semester"""
         if semester_num <= 2:
             level_filter = courses_df['course_num'] <= 299
         elif semester_num <= 4:

@@ -1,5 +1,5 @@
 """
-GPA Prediction System - FINAL VERSION - Feature Engineering
+GPA Prediction System Feature Engineering
 Creates ML-ready features from raw data
 """
 
@@ -36,7 +36,6 @@ class FeatureEngineer:
         return students_df, courses_df, enrollments_df, semester_gpa_df
     
     def create_features(self, students_df, courses_df, enrollments_df, semester_gpa_df):
-        """Create comprehensive features for ML models"""
         print("\n" + "="*70)
         print("ENGINEERING FEATURES")
         print("="*70)
@@ -68,7 +67,6 @@ class FeatureEngineer:
     
     def _create_student_semester_features(self, student_id, semester_idx, 
                                          student_data, student_info, student_gpa):
-        """Create features for a specific student and semester"""
         
         current_semester = student_gpa.iloc[semester_idx]['semester']
         historical_gpa = student_gpa.iloc[:semester_idx]

@@ -1,5 +1,5 @@
 """
-GPA Prediction System - FINAL VERSION - PostgreSQL Database Setup
+GPA Prediction System PostgreSQL Database Setup
 Creates database, tables, and loads data from CSV files
 """
 
@@ -28,7 +28,7 @@ class DatabaseSetup:
     def connect(self):
         """Connect to PostgreSQL server"""
         try:
-            # First connect to default postgres database to create our database
+            # Connect to default postgres database 
             conn = psycopg2.connect(
                 dbname='postgres',
                 user=DB_CONFIG['user'],
@@ -48,7 +48,6 @@ class DatabaseSetup:
             cursor.close()
             conn.close()
             
-            # Now connect to our new database
             self.conn = psycopg2.connect(**DB_CONFIG)
             self.cursor = self.conn.cursor()
             print("✓ Connected to database")

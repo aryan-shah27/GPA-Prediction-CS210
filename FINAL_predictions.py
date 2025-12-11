@@ -1,5 +1,5 @@
 """
-GPA Prediction System - FINAL VERSION - Sample Predictions
+GPA Prediction System Sample Predictions
 Demonstrates predictions for sample students
 """
 
@@ -11,18 +11,15 @@ import os
 OUTPUT_PATH = r"C:\python\files"
 
 def load_models():
-    """Load trained models"""
     with open(os.path.join(OUTPUT_PATH, 'trained_models.pkl'), 'rb') as f:
         model_data = pickle.load(f)
     return model_data
 
 def load_processed_data():
-    """Load processed features"""
     df = pd.read_csv(os.path.join(OUTPUT_PATH, 'processed_features.csv'))
     return df
 
 def generate_sample_predictions(df, model_data, num_samples=10):
-    """Generate predictions for sample students"""
     print("="*70)
     print("SAMPLE GPA PREDICTIONS")
     print("="*70)
@@ -33,11 +30,10 @@ def generate_sample_predictions(df, model_data, num_samples=10):
     # Get random samples
     samples = df.sample(min(num_samples, len(df)))
     
-    # Prepare features (drop metadata columns)
+    # (drop metadata columns)
     metadata_cols = ['student_id', 'target_semester', 'major', 'target_gpa']
     X_sample = samples.drop(metadata_cols, axis=1)
     
-    # Make predictions
     predictions = best_model.predict(X_sample)
     
     # Display results
@@ -119,7 +115,6 @@ def save_all_predictions(df, model_data):
 
 
 def main():
-    """Main execution"""
     # Load data and models
     print("Loading models and data...")
     model_data = load_models()

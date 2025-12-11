@@ -1,5 +1,5 @@
 """
-GPA Prediction System - FINAL VERSION - GUI Application
+GPA Prediction System GUI Application
 Interactive GUI showing predictions with detailed explanations
 """
 
@@ -29,13 +29,10 @@ class GPAPredictionGUI:
     def load_data(self):
         """Load processed data and models"""
         try:
-            # Load predictions
             self.predictions_df = pd.read_csv(os.path.join(OUTPUT_PATH, 'all_predictions.csv'))
             
-            # Load processed features for analysis
             self.features_df = pd.read_csv(os.path.join(OUTPUT_PATH, 'processed_features.csv'))
             
-            # Load models
             with open(os.path.join(OUTPUT_PATH, 'trained_models.pkl'), 'rb') as f:
                 model_data = pickle.load(f)
             self.best_model_name = model_data['best_model_name']
@@ -47,8 +44,7 @@ class GPAPredictionGUI:
     
     def create_widgets(self):
         """Create GUI widgets"""
-        
-        # Header
+
         header = tk.Frame(self.root, bg='#2c3e50', height=80)
         header.pack(fill='x')
         
@@ -56,7 +52,6 @@ class GPAPredictionGUI:
                         font=('Arial', 24, 'bold'), bg='#2c3e50', fg='white')
         title.pack(pady=20)
         
-        # Main container
         main_frame = tk.Frame(self.root, bg='#f0f0f0')
         main_frame.pack(fill='both', expand=True, padx=20, pady=20)
         
@@ -66,8 +61,7 @@ class GPAPredictionGUI:
         
         tk.Label(left_panel, text="Select Student", font=('Arial', 14, 'bold'), 
                 bg='white').pack(pady=10)
-        
-        # Student list
+
         self.student_listbox = tk.Listbox(left_panel, width=25, height=20, 
                                           font=('Arial', 10))
         self.student_listbox.pack(padx=10, pady=5)
@@ -76,14 +70,12 @@ class GPAPredictionGUI:
         scrollbar.pack(side='right', fill='y')
         self.student_listbox.config(yscrollcommand=scrollbar.set)
         scrollbar.config(command=self.student_listbox.yview)
-        
-        # Populate student list
+
         students = self.predictions_df['student_id'].unique()[:50]  # Show first 50
         for student_id in students:
             major = self.predictions_df[self.predictions_df['student_id'] == student_id]['major'].iloc[0]
             self.student_listbox.insert('end', f"ID: {student_id} - {major[:15]}")
         
-        # Button
         tk.Button(left_panel, text="Show Prediction", command=self.show_prediction,
                  bg='#3498db', fg='white', font=('Arial', 12, 'bold'),
                  padx=20, pady=10).pack(pady=20)
@@ -92,7 +84,6 @@ class GPAPredictionGUI:
         self.right_panel = tk.Frame(main_frame, bg='white', relief='raised', bd=2)
         self.right_panel.pack(side='right', fill='both', expand=True)
         
-        # Initial message
         self.create_welcome_message()
     
     def create_welcome_message(self):
@@ -127,7 +118,6 @@ class GPAPredictionGUI:
         selected_text = self.student_listbox.get(selection[0])
         student_id = int(selected_text.split(':')[1].split('-')[0].strip())
         
-        # Get student data
         student_predictions = self.predictions_df[self.predictions_df['student_id'] == student_id]
         
         if len(student_predictions) == 0:
@@ -141,13 +131,10 @@ class GPAPredictionGUI:
         self.display_results(student_id, latest_pred, student_predictions)
     
     def display_results(self, student_id, latest_pred, all_predictions):
-        """Display prediction results with explanation"""
         
-        # Clear right panel
         for widget in self.right_panel.winfo_children():
             widget.destroy()
         
-        # Create scrollable frame
         canvas = tk.Canvas(self.right_panel, bg='white')
         scrollbar = tk.Scrollbar(self.right_panel, orient="vertical", command=canvas.yview)
         scrollable_frame = tk.Frame(canvas, bg='white')
@@ -160,7 +147,6 @@ class GPAPredictionGUI:
         canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
         canvas.configure(yscrollcommand=scrollbar.set)
         
-        # Student header
         header_frame = tk.Frame(scrollable_frame, bg='#3498db', height=60)
         header_frame.pack(fill='x', pady=(0, 20))
         
@@ -168,15 +154,13 @@ class GPAPredictionGUI:
                 font=('Arial', 16, 'bold'), bg='#3498db', fg='white').pack(pady=5)
         tk.Label(header_frame, text=f"Major: {latest_pred['major']}", 
                 font=('Arial', 12), bg='#3498db', fg='white').pack()
-        
-        # Main prediction card
+
         pred_frame = tk.Frame(scrollable_frame, bg='#ecf0f1', relief='raised', bd=2)
         pred_frame.pack(fill='x', padx=20, pady=10)
         
         tk.Label(pred_frame, text="📊 Next Semester GPA Prediction", 
                 font=('Arial', 14, 'bold'), bg='#ecf0f1').pack(pady=10)
         
-        # Predicted GPA with color coding
         predicted_gpa = latest_pred['predicted_gpa']
         color = self.get_gpa_color(predicted_gpa)
         
@@ -189,14 +173,12 @@ class GPAPredictionGUI:
         tk.Label(pred_frame, text=f"Model Used: {latest_pred['model_used']}", 
                 font=('Arial', 10, 'italic'), bg='#ecf0f1', fg='gray').pack(pady=5)
         
-        # Explanation section
         explain_frame = tk.Frame(scrollable_frame, bg='white')
         explain_frame.pack(fill='x', padx=20, pady=20)
         
         tk.Label(explain_frame, text="📖 What This Prediction Means", 
                 font=('Arial', 14, 'bold'), bg='white').pack(anchor='w', pady=10)
-        
-        # Get explanation
+
         explanation = self.generate_explanation(predicted_gpa, latest_pred['probability_range'])
         
         explain_text = tk.Text(explain_frame, height=8, width=70, wrap='word', 
@@ -205,7 +187,6 @@ class GPAPredictionGUI:
         explain_text.config(state='disabled')
         explain_text.pack(fill='x', pady=5)
         
-        # Performance factors
         factors_frame = tk.Frame(scrollable_frame, bg='white')
         factors_frame.pack(fill='x', padx=20, pady=10)
         
@@ -246,7 +227,6 @@ class GPAPredictionGUI:
             tk.Label(hist_row, text=f"Error: {row['prediction_error']:.3f}", 
                     font=('Arial', 10), bg='#f9f9f9', fg=error_color, width=15, anchor='w').pack(side='left')
         
-        # Pack canvas and scrollbar
         canvas.pack(side="left", fill="both", expand=True)
         scrollbar.pack(side="right", fill="y")
     
@@ -359,7 +339,6 @@ class GPAPredictionGUI:
                 "Your GPA specifically in major-related courses"
             ))
         
-        # Consistency
         if 'grade_consistency' in latest_features:
             consistency = latest_features['grade_consistency']
             consist_text = "High" if consistency > 5 else "Moderate" if consistency > 3 else "Low"

@@ -1,5 +1,5 @@
 """
-GPA Prediction System - FINAL VERSION - Model Training
+GPA Prediction System Model Training
 Trains and evaluates multiple ML models
 """
 
@@ -26,7 +26,7 @@ class ModelTrainer:
         self.best_model_name = None
         
     def load_data(self):
-        """Load processed features"""
+
         print("="*70)
         print("LOADING PROCESSED DATA")
         print("="*70)
@@ -130,7 +130,7 @@ class ModelTrainer:
         return grid_search.best_estimator_
     
     def evaluate_model(self, model, model_name, X_train, y_train, X_test, y_test):
-        """Evaluate model performance"""
+  
         # Training predictions
         y_train_pred = model.predict(X_train)
         train_mae = mean_absolute_error(y_train, y_train_pred)
@@ -160,7 +160,7 @@ class ModelTrainer:
         return y_test_pred
     
     def train_all_models(self, X_train, y_train, X_test, y_test):
-        """Train and evaluate all models"""
+    
         print("\n" + "="*70)
         print("TRAINING ALL MODELS")
         print("="*70)
@@ -193,7 +193,7 @@ class ModelTrainer:
         print(f"{'='*70}")
     
     def create_visualizations(self, y_test, X_train):
-        """Create visualizations"""
+       
         print("\n" + "="*70)
         print("CREATING VISUALIZATIONS")
         print("="*70)
@@ -277,7 +277,7 @@ class ModelTrainer:
         plt.close()
     
     def save_models(self):
-        """Save trained models"""
+        
         print("\n" + "="*70)
         print("SAVING MODELS")
         print("="*70)
